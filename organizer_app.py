@@ -137,7 +137,7 @@ class App(ctk.CTk):
 
         # --- Sistema de Abas ---
         self.tab_view = ctk.CTkTabview(self)
-        self.tab_view.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+        self.tab_view.grid(row=0, column=0, padx=20, pady=(20, 10), sticky="nsew")
         self.tab_view.add("Principal")
         self.tab_view.add("Regras de Extensão")
         self.tab_view.add("Regras de Palavra-Chave")
@@ -151,6 +151,12 @@ class App(ctk.CTk):
         self.setup_rules_tab(self.tab_view.tab("Regras de Palavra-Chave"), "Palavra-Chave", self.keyword_rules, self.add_keyword_rule, self.remove_keyword_rule)
         # --- Aba de Histórico ---
         self.setup_history_tab()
+        
+        # --- Rodapé ---
+        current_year = datetime.now().year
+        footer_label = ctk.CTkLabel(self, text=f"© {current_year} Rafael Custódio. Todos os direitos reservados.", font=ctk.CTkFont(size=10), text_color="gray")
+        footer_label.grid(row=1, column=0, padx=20, pady=(0, 10), sticky="s")
+
 
     def setup_main_tab(self):
         tab = self.tab_view.tab("Principal")
