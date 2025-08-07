@@ -1,5 +1,7 @@
 {
-    "folders": [],
+    "folders": [
+        "C:/Users/rafae/Downloads"
+    ],
     "autostart": true,
     "organize_by_date": true,
     "extensions": {

@@ -18,6 +18,11 @@ import sys
 if sys.platform == 'win32':
     import win32com.client
     import pythoncom
+    # Novas importações para a verificação de instância única
+    import win32event
+    import win32api
+    from winerror import ERROR_ALREADY_EXISTS
+    import win32gui
 
 # --- Constantes e Configurações Padrão ---
 CONFIG_FILE = "config.json"
@@ -223,7 +228,6 @@ class App(ctk.CTk):
     def load_config(self):
         try:
             if os.path.exists(CONFIG_FILE):
-                # CORREÇÃO: Adicionado encoding='utf-8'
                 with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
                     config = json.load(f)
                 self.target_directories = config.get("folders", [])
@@ -253,7 +257,6 @@ class App(ctk.CTk):
             "keyword_rules": self.keyword_rules,
             "move_history": list(self.move_history)
         }
-        # CORREÇÃO: Adicionado encoding='utf-8' e ensure_ascii=False
         with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
             json.dump(config, f, indent=4, ensure_ascii=False)
         self.log_message("Configurações salvas.")
@@ -396,6 +399,7 @@ class App(ctk.CTk):
 
     def stop_monitoring(self):
         if self.is_monitoring:
+            self.log_message("A parar a monitorização... Por favor, aguarde.")
             self.is_monitoring = False
             self.update_button_states()
     
@@ -404,6 +408,10 @@ class App(ctk.CTk):
         handler = FileOrganizerHandler(directory, self)
         try:
             for filename in os.listdir(directory):
+                # CORREÇÃO: Verifica se a monitorização deve parar a meio da verificação
+                if not self.is_monitoring:
+                    self.log_message("A verificação inicial foi cancelada pelo utilizador.")
+                    return
                 file_path = os.path.join(directory, filename)
                 if os.path.isfile(file_path):
                     handler.process(file_path)
@@ -518,6 +526,25 @@ class App(ctk.CTk):
         self.destroy()
 
 if __name__ == "__main__":
+    if sys.platform == 'win32':
+        # Cria um nome único para o mutex. Usar um GUID é uma boa prática.
+        mutex_name = "OrganizadorDeFicheiros_Global_Mutex_e9a7e6a0-9b1a-4b7c-9c2b-6d6f8a9d0a1b"
+        
+        # Tenta criar o mutex.
+        mutex = win32event.CreateMutex(None, 1, mutex_name)
+        
+        # Verifica se o mutex já existe.
+        if win32api.GetLastError() == ERROR_ALREADY_EXISTS:
+            # Outra instância está a ser executada. Encontra a sua janela e trá-la para a frente.
+            hwnd = win32gui.FindWindow(None, "Organizador de Ficheiros Automático")
+            if hwnd:
+                # Restaura a janela se estiver minimizada.
+                win32gui.ShowWindow(hwnd, 9) # 9 é SW_RESTORE
+                # Define-a como a janela de primeiro plano.
+                win32gui.SetForegroundWindow(hwnd)
+            # Sai desta nova instância.
+            sys.exit(0)
+
     start_minimized_arg = '--start-minimized' in sys.argv
     ctk.set_appearance_mode("System")
     ctk.set_default_color_theme("blue")
