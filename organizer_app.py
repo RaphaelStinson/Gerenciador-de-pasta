@@ -30,7 +30,7 @@ DEFAULT_EXTENSION_MAP = {
 HISTORY_LIMIT = 100 # Limite de ações no histórico para a função "Desfazer"
 
 class FileOrganizerHandler(FileSystemEventHandler):
-    """Manipula os eventos do sistema de arquivos."""
+    """Manipula os eventos do sistema de ficheiros."""
     def __init__(self, watch_directory, app_instance):
         self.watch_directory = watch_directory
         self.app = app_instance
@@ -41,7 +41,7 @@ class FileOrganizerHandler(FileSystemEventHandler):
             self.process(event.src_path)
 
     def process(self, file_path):
-        """Processa e move um único arquivo com base nas regras definidas."""
+        """Processa e move um único ficheiro com base nas regras definidas."""
         try:
             if not os.path.exists(file_path): return
             filename = os.path.basename(file_path)
@@ -80,7 +80,7 @@ class FileOrganizerHandler(FileSystemEventHandler):
                 except Exception as e:
                     self.app.log_message(f"Erro ao obter data de '{filename}': {e}. Organizando sem data.")
 
-            # --- Mover o Arquivo ---
+            # --- Mover o Ficheiro ---
             destination_file_path = os.path.join(final_destination_path, filename)
 
             if os.path.normpath(file_path) == os.path.normpath(destination_file_path):
@@ -91,7 +91,7 @@ class FileOrganizerHandler(FileSystemEventHandler):
             
             shutil.move(file_path, destination_file_path)
 
-            # --- Registrar Ação ---
+            # --- Registar Ação ---
             log_msg = f"'{filename}' movido para '{os.path.relpath(final_destination_path, self.watch_directory)}'."
             self.app.log_message(log_msg)
             self.app.add_to_history(file_path, destination_file_path, log_msg)
@@ -102,7 +102,7 @@ class FileOrganizerHandler(FileSystemEventHandler):
 class App(ctk.CTk):
     def __init__(self, start_minimized=False):
         super().__init__()
-        self.title("Organizador de Arquivos Automático")
+        self.title("Organizador de Ficheiros Automático")
         self.geometry("850x750")
 
         # --- Variáveis de Estado ---
@@ -157,13 +157,13 @@ class App(ctk.CTk):
         folder_controls_frame = ctk.CTkFrame(tab)
         folder_controls_frame.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
         folder_controls_frame.grid_columnconfigure((0, 1), weight=1)
-        self.add_folder_button = ctk.CTkButton(folder_controls_frame, text="Adicionar Pasta para Monitorar", command=self.add_folder)
+        self.add_folder_button = ctk.CTkButton(folder_controls_frame, text="Adicionar Pasta para Monitorizar", command=self.add_folder)
         self.add_folder_button.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
         self.create_safe_folder_button = ctk.CTkButton(folder_controls_frame, text="Criar Pasta Segura", command=self.create_safe_folder)
         self.create_safe_folder_button.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
 
         # Lista de Pastas
-        self.folder_list_frame = ctk.CTkScrollableFrame(tab, label_text="Pastas Monitoradas (só a raiz de cada pasta é monitorada em tempo real)")
+        self.folder_list_frame = ctk.CTkScrollableFrame(tab, label_text="Pastas Monitorizadas (só a raiz de cada pasta é monitorizada em tempo real)")
         self.folder_list_frame.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
         self.folder_list_frame.grid_columnconfigure(0, weight=1)
 
@@ -171,9 +171,9 @@ class App(ctk.CTk):
         general_controls_frame = ctk.CTkFrame(tab)
         general_controls_frame.grid(row=2, column=0, padx=10, pady=10, sticky="ew")
         general_controls_frame.grid_columnconfigure((0, 1, 2), weight=1)
-        self.start_button = ctk.CTkButton(general_controls_frame, text="Iniciar Monitoramento", command=self.start_monitoring)
+        self.start_button = ctk.CTkButton(general_controls_frame, text="Iniciar Monitorização", command=self.start_monitoring)
         self.start_button.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
-        self.stop_button = ctk.CTkButton(general_controls_frame, text="Parar Monitoramento", command=self.stop_monitoring)
+        self.stop_button = ctk.CTkButton(general_controls_frame, text="Parar Monitorização", command=self.stop_monitoring)
         self.stop_button.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
         self.undo_button = ctk.CTkButton(general_controls_frame, text="Desfazer Última Ação", command=self.undo_last_move)
         self.undo_button.grid(row=0, column=2, padx=5, pady=5, sticky="ew")
@@ -181,7 +181,7 @@ class App(ctk.CTk):
         # Checkboxes de Configuração
         checkbox_frame = ctk.CTkFrame(tab)
         checkbox_frame.grid(row=3, column=0, padx=10, pady=10, sticky="ew")
-        self.autostart_checkbox = ctk.CTkCheckBox(checkbox_frame, text="Iniciar monitoramento ao abrir o programa", variable=self.autostart_var, command=self.save_config)
+        self.autostart_checkbox = ctk.CTkCheckBox(checkbox_frame, text="Iniciar monitorização ao abrir o programa", variable=self.autostart_var, command=self.save_config)
         self.autostart_checkbox.pack(anchor="w", padx=10, pady=5)
         self.organize_by_date_var_checkbox = ctk.CTkCheckBox(checkbox_frame, text="Criar subpastas por Ano/Mês", variable=self.organize_by_date_var, command=self.save_config)
         self.organize_by_date_var_checkbox.pack(anchor="w", padx=10, pady=5)
@@ -223,7 +223,8 @@ class App(ctk.CTk):
     def load_config(self):
         try:
             if os.path.exists(CONFIG_FILE):
-                with open(CONFIG_FILE, 'r') as f:
+                # CORREÇÃO: Adicionado encoding='utf-8'
+                with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
                     config = json.load(f)
                 self.target_directories = config.get("folders", [])
                 self.autostart_var.set(config.get("autostart", False))
@@ -234,7 +235,7 @@ class App(ctk.CTk):
                 self.log_message("Configurações carregadas.")
             else:
                 self.extension_map = DEFAULT_EXTENSION_MAP.copy()
-                self.log_message("Nenhum arquivo de configuração encontrado. Usando padrões.")
+                self.log_message("Nenhum ficheiro de configuração encontrado. Usando padrões.")
 
             if sys.platform == 'win32': self.startup_var.set(self.check_if_startup_shortcut_exists())
             self.update_all_ui_parts()
@@ -252,8 +253,9 @@ class App(ctk.CTk):
             "keyword_rules": self.keyword_rules,
             "move_history": list(self.move_history)
         }
-        with open(CONFIG_FILE, 'w') as f:
-            json.dump(config, f, indent=4)
+        # CORREÇÃO: Adicionado encoding='utf-8' e ensure_ascii=False
+        with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
+            json.dump(config, f, indent=4, ensure_ascii=False)
         self.log_message("Configurações salvas.")
 
     def populate_rules_list(self, list_frame, data_dict, remove_command):
@@ -381,15 +383,14 @@ class App(ctk.CTk):
                 self.organize_existing_files(directory)
                 event_handler = FileOrganizerHandler(directory, self)
                 observer = Observer()
-                # recursive=False garante que só a pasta raiz é monitorada em tempo real.
                 observer.schedule(event_handler, directory, recursive=False)
                 observer.start()
                 self.observers.append(observer)
-            self.log_message("Monitoramento em tempo real iniciado.")
+            self.log_message("Monitorização em tempo real iniciada.")
             while self.is_monitoring: time.sleep(1)
             for observer in self.observers:
                 observer.stop(); observer.join()
-            self.log_message("Monitoramento parado.")
+            self.log_message("Monitorização parada.")
         self.monitoring_thread = threading.Thread(target=monitor_task, daemon=True)
         self.monitoring_thread.start()
 
@@ -399,13 +400,11 @@ class App(ctk.CTk):
             self.update_button_states()
     
     def organize_existing_files(self, directory):
-        """Varre APENAS A RAIZ do diretório e aplica as regras."""
-        self.log_message(f"Verificando arquivos na raiz de: {os.path.basename(directory)}")
+        self.log_message(f"Verificando ficheiros na raiz de: {os.path.basename(directory)}")
         handler = FileOrganizerHandler(directory, self)
         try:
             for filename in os.listdir(directory):
                 file_path = os.path.join(directory, filename)
-                # Processa apenas se for um arquivo, ignorando subpastas.
                 if os.path.isfile(file_path):
                     handler.process(file_path)
         except Exception as e:
@@ -429,7 +428,7 @@ class App(ctk.CTk):
         
     def create_safe_folder(self):
         if not self.target_directories:
-            messagebox.showwarning("Aviso", "Adicione e selecione uma pasta monitorada primeiro.")
+            messagebox.showwarning("Aviso", "Adicione e selecione uma pasta monitorizada primeiro.")
             return
         
         dialog = ctk.CTkInputDialog(text="Digite o nome da nova pasta segura:", title="Criar Pasta Segura")
@@ -437,7 +436,6 @@ class App(ctk.CTk):
         
         if folder_name:
             try:
-                # Cria a pasta dentro do primeiro diretório da lista
                 safe_folder_path = os.path.join(self.target_directories[0], folder_name)
                 if not os.path.exists(safe_folder_path):
                     os.makedirs(safe_folder_path)
@@ -485,7 +483,7 @@ class App(ctk.CTk):
         return os.path.join(os.environ['APPDATA'], 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
 
     def get_shortcut_path(self):
-        return os.path.join(self.get_startup_folder_path(), "OrganizadorDeArquivos.lnk")
+        return os.path.join(self.get_startup_folder_path(), "OrganizadorDeFicheiros.lnk")
 
     def check_if_startup_shortcut_exists(self):
         return os.path.exists(self.get_shortcut_path())
@@ -500,7 +498,7 @@ class App(ctk.CTk):
     def setup_tray_icon(self):
         icon_image = self.create_tray_image()
         menu = pystray.Menu(pystray.MenuItem('Mostrar', self.show_window, default=True), pystray.MenuItem('Sair', self.quit_app))
-        self.tray_icon = pystray.Icon("organizador", icon_image, "Organizador de Arquivos", menu)
+        self.tray_icon = pystray.Icon("organizador", icon_image, "Organizador de Ficheiros", menu)
         self.tray_icon.run()
 
     def hide_window(self):
