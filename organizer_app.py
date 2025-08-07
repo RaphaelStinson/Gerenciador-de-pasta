@@ -123,6 +123,7 @@ class App(ctk.CTk):
         self.organize_by_date_var = tk.BooleanVar()
         self.tray_icon = None
         self.sub_window = None
+        self.mutex = None # Variável para guardar o handle do mutex
 
         self.create_widgets()
         self.load_config()
@@ -390,13 +391,18 @@ class App(ctk.CTk):
             self.observers = []
             for directory in self.target_directories:
                 self.organize_existing_files(directory)
+                if not self.is_monitoring: break
                 event_handler = FileOrganizerHandler(directory, self)
                 observer = Observer()
                 observer.schedule(event_handler, directory, recursive=False)
                 observer.start()
                 self.observers.append(observer)
-            self.log_message("Monitorização em tempo real iniciada.")
+            
+            if self.is_monitoring:
+                self.log_message("Monitorização em tempo real iniciada.")
+
             while self.is_monitoring: time.sleep(1)
+
             for observer in self.observers:
                 observer.stop(); observer.join()
             self.log_message("Monitorização parada.")
@@ -440,11 +446,6 @@ class App(ctk.CTk):
         self.save_config()
         
     def create_safe_folder(self):
-        if not self.target_directories:
-            messagebox.showwarning("Aviso", "Adicione uma pasta para monitorizar primeiro.", parent=self)
-            return
-        
-        # Permite ao utilizador escolher onde criar a pasta segura
         initial_dir = self.target_directories[0] if self.target_directories else os.path.expanduser("~")
         parent_folder = filedialog.askdirectory(
             title="Selecione onde criar a Pasta Segura",
@@ -453,7 +454,7 @@ class App(ctk.CTk):
         )
         
         if not parent_folder:
-            return # Utilizador cancelou a seleção de pasta
+            return
 
         dialog = ctk.CTkInputDialog(text="Digite o nome da nova pasta segura:", title="Criar Pasta Segura")
         folder_name = dialog.get_input()
@@ -542,27 +543,25 @@ class App(ctk.CTk):
         self.destroy()
 
 if __name__ == "__main__":
+    mutex = None
     if sys.platform == 'win32':
-        # Cria um nome único para o mutex. Usar um GUID é uma boa prática.
         mutex_name = "OrganizadorDeFicheiros_Global_Mutex_e9a7e6a0-9b1a-4b7c-9c2b-6d6f8a9d0a1b"
-        
-        # Tenta criar o mutex.
         mutex = win32event.CreateMutex(None, 1, mutex_name)
-        
-        # Verifica se o mutex já existe.
         if win32api.GetLastError() == ERROR_ALREADY_EXISTS:
-            # Outra instância está a ser executada. Encontra a sua janela e trá-la para a frente.
             hwnd = win32gui.FindWindow(None, "Organizador de Ficheiros Automático")
             if hwnd:
-                # Restaura a janela se estiver minimizada.
-                win32gui.ShowWindow(hwnd, 9) # 9 é SW_RESTORE
-                # Define-a como a janela de primeiro plano.
+                win32gui.ShowWindow(hwnd, 9)
                 win32gui.SetForegroundWindow(hwnd)
-            # Sai desta nova instância.
-            sys.exit(0)
+            # CORREÇÃO: Usa os._exit(0) para uma saída imediata e limpa,
+            # evitando a criação de um ícone "fantasma" na bandeja.
+            os._exit(0)
 
     start_minimized_arg = '--start-minimized' in sys.argv
     ctk.set_appearance_mode("System")
     ctk.set_default_color_theme("blue")
     app = App(start_minimized=start_minimized_arg)
+    
+    if sys.platform == 'win32':
+        app.mutex = mutex
+
     app.mainloop()
