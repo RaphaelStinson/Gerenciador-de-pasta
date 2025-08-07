@@ -2,5 +2,41 @@
     "folders": [
         "C:/Users/rafae/Downloads"
     ],
-    "autostart": true
+    "autostart": true,
+    "extensions": {
+        ".jpg": "Imagens",
+        ".jpeg": "Imagens",
+        ".png": "Imagens",
+        ".gif": "Imagens",
+        ".bmp": "Imagens",
+        ".svg": "Imagens",
+        ".webp": "Imagens",
+        ".tiff": "Imagens",
+        ".pdf": "Documentos",
+        ".docx": "Documentos",
+        ".doc": "Documentos",
+        ".txt": "Documentos",
+        ".pptx": "Apresenta\u00e7\u00f5es",
+        ".xlsx": "Planilhas",
+        ".csv": "Planilhas",
+        ".odt": "Documentos",
+        ".mp4": "V\u00eddeos",
+        ".mov": "V\u00eddeos",
+        ".avi": "V\u00eddeos",
+        ".mkv": "V\u00eddeos",
+        ".mp3": "\u00c1udios",
+        ".wav": "\u00c1udios",
+        ".flac": "\u00c1udios",
+        ".aac": "\u00c1udios",
+        ".zip": "Compactados",
+        ".rar": "Compactados",
+        ".7z": "Compactados",
+        ".gz": "Compactados",
+        ".exe": "Execut\u00e1veis",
+        ".msi": "Instaladores",
+        ".py": "Scripts Python",
+        ".js": "Scripts JavaScript",
+        ".html": "Web",
+        ".css": "Web"
+    }
 }
