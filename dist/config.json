@@ -3,6 +3,7 @@
         "C:/Users/rafae/Downloads"
     ],
     "autostart": true,
+    "organize_by_date": true,
     "extensions": {
         ".jpg": "Imagens",
         ".jpeg": "Imagens",
@@ -38,5 +39,508 @@
         ".js": "Scripts JavaScript",
         ".html": "Web",
         ".css": "Web"
-    }
+    },
+    "keyword_rules": {},
+    "move_history": [
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusShieldThrowReceive_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusShieldThrowReceive_Bink.bik",
+            "log_msg": "'ZagreusShieldThrowReceive_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusShieldThrowReceive_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusShieldThrowReceive_Bink.bik_atlas",
+            "log_msg": "'ZagreusShieldThrowReceive_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusShieldWalk_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusShieldWalk_Bink.bik",
+            "log_msg": "'ZagreusShieldWalk_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusShieldWalk_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusShieldWalk_Bink.bik_atlas",
+            "log_msg": "'ZagreusShieldWalk_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01DashAttack_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear01DashAttack_Bink.bik",
+            "log_msg": "'ZagreusSpear01DashAttack_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01DashAttack_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear01DashAttack_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear01DashAttack_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01ReturnToIdle_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear01ReturnToIdle_Bink.bik",
+            "log_msg": "'ZagreusSpear01ReturnToIdle_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01ReturnToIdle_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear01ReturnToIdle_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear01ReturnToIdle_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01RunStop_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear01RunStop_Bink.bik",
+            "log_msg": "'ZagreusSpear01RunStop_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01RunStop_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear01RunStop_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear01RunStop_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01Run_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear01Run_Bink.bik",
+            "log_msg": "'ZagreusSpear01Run_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01Run_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear01Run_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear01Run_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01Spin_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear01Spin_Bink.bik",
+            "log_msg": "'ZagreusSpear01Spin_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01Spin_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear01Spin_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear01Spin_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01ThrowReceive_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear01ThrowReceive_Bink.bik",
+            "log_msg": "'ZagreusSpear01ThrowReceive_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01ThrowReceive_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear01ThrowReceive_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear01ThrowReceive_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01Throw_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear01Throw_Bink.bik",
+            "log_msg": "'ZagreusSpear01Throw_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01Throw_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear01Throw_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear01Throw_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear01_Bink.bik",
+            "log_msg": "'ZagreusSpear01_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear01_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear01_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear01_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02DashAttack_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear02DashAttack_Bink.bik",
+            "log_msg": "'ZagreusSpear02DashAttack_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02DashAttack_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear02DashAttack_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear02DashAttack_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02ReturnToIdle_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear02ReturnToIdle_Bink.bik",
+            "log_msg": "'ZagreusSpear02ReturnToIdle_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02ReturnToIdle_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear02ReturnToIdle_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear02ReturnToIdle_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02RunStop_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear02RunStop_Bink.bik",
+            "log_msg": "'ZagreusSpear02RunStop_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02RunStop_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear02RunStop_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear02RunStop_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02Run_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear02Run_Bink.bik",
+            "log_msg": "'ZagreusSpear02Run_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02Run_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear02Run_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear02Run_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02Spin_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear02Spin_Bink.bik",
+            "log_msg": "'ZagreusSpear02Spin_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02Spin_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear02Spin_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear02Spin_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02ThrowReceive_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear02ThrowReceive_Bink.bik",
+            "log_msg": "'ZagreusSpear02ThrowReceive_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02ThrowReceive_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear02ThrowReceive_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear02ThrowReceive_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02Throw_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear02Throw_Bink.bik",
+            "log_msg": "'ZagreusSpear02Throw_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02Throw_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear02Throw_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear02Throw_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear02_Bink.bik",
+            "log_msg": "'ZagreusSpear02_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear02_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear02_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear02_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear03DashAttack_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear03DashAttack_Bink.bik",
+            "log_msg": "'ZagreusSpear03DashAttack_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear03DashAttack_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear03DashAttack_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear03DashAttack_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear03ReturnToIdle_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear03ReturnToIdle_Bink.bik",
+            "log_msg": "'ZagreusSpear03ReturnToIdle_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear03ReturnToIdle_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear03ReturnToIdle_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear03ReturnToIdle_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear03RunStop_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear03RunStop_Bink.bik",
+            "log_msg": "'ZagreusSpear03RunStop_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear03RunStop_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear03RunStop_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear03RunStop_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear03Run_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear03Run_Bink.bik",
+            "log_msg": "'ZagreusSpear03Run_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear03Run_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear03Run_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear03Run_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear03Spin_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear03Spin_Bink.bik",
+            "log_msg": "'ZagreusSpear03Spin_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear03Spin_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear03Spin_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear03Spin_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear03ThrowReceive_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSpear03ThrowReceive_Bink.bik",
+            "log_msg": "'ZagreusSpear03ThrowReceive_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSpear03ThrowReceive_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSpear03ThrowReceive_Bink.bik_atlas",
+            "log_msg": "'ZagreusSpear03ThrowReceive_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword01ReturnToIdle_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSword01ReturnToIdle_Bink.bik",
+            "log_msg": "'ZagreusSword01ReturnToIdle_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword01ReturnToIdle_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSword01ReturnToIdle_Bink.bik_atlas",
+            "log_msg": "'ZagreusSword01ReturnToIdle_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword01RunStop_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSword01RunStop_Bink.bik",
+            "log_msg": "'ZagreusSword01RunStop_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword01RunStop_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSword01RunStop_Bink.bik_atlas",
+            "log_msg": "'ZagreusSword01RunStop_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword01Run_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSword01Run_Bink.bik",
+            "log_msg": "'ZagreusSword01Run_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword01Run_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSword01Run_Bink.bik_atlas",
+            "log_msg": "'ZagreusSword01Run_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword01_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSword01_Bink.bik",
+            "log_msg": "'ZagreusSword01_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword01_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSword01_Bink.bik_atlas",
+            "log_msg": "'ZagreusSword01_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword02DashAttack_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSword02DashAttack_Bink.bik",
+            "log_msg": "'ZagreusSword02DashAttack_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword02DashAttack_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSword02DashAttack_Bink.bik_atlas",
+            "log_msg": "'ZagreusSword02DashAttack_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword02Parry_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSword02Parry_Bink.bik",
+            "log_msg": "'ZagreusSword02Parry_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword02Parry_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSword02Parry_Bink.bik_atlas",
+            "log_msg": "'ZagreusSword02Parry_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword02ReturnToIdle_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSword02ReturnToIdle_Bink.bik",
+            "log_msg": "'ZagreusSword02ReturnToIdle_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword02ReturnToIdle_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSword02ReturnToIdle_Bink.bik_atlas",
+            "log_msg": "'ZagreusSword02ReturnToIdle_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword02RunStop_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSword02RunStop_Bink.bik",
+            "log_msg": "'ZagreusSword02RunStop_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword02RunStop_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSword02RunStop_Bink.bik_atlas",
+            "log_msg": "'ZagreusSword02RunStop_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword02Run_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSword02Run_Bink.bik",
+            "log_msg": "'ZagreusSword02Run_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword02Run_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSword02Run_Bink.bik_atlas",
+            "log_msg": "'ZagreusSword02Run_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword02_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSword02_Bink.bik",
+            "log_msg": "'ZagreusSword02_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSword02_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSword02_Bink.bik_atlas",
+            "log_msg": "'ZagreusSword02_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordArthurAttack1_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordArthurAttack1_Bink.bik",
+            "log_msg": "'ZagreusSwordArthurAttack1_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordArthurAttack1_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordArthurAttack1_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordArthurAttack1_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordArthurAttack2_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordArthurAttack2_Bink.bik",
+            "log_msg": "'ZagreusSwordArthurAttack2_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordArthurAttack2_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordArthurAttack2_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordArthurAttack2_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordArthurAttack3_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordArthurAttack3_Bink.bik",
+            "log_msg": "'ZagreusSwordArthurAttack3_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordArthurAttack3_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordArthurAttack3_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordArthurAttack3_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordArthurAttackParry_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordArthurAttackParry_Bink.bik",
+            "log_msg": "'ZagreusSwordArthurAttackParry_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordArthurAttackParry_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordArthurAttackParry_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordArthurAttackParry_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordArthurIdle_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordArthurIdle_Bink.bik",
+            "log_msg": "'ZagreusSwordArthurIdle_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordArthurIdle_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordArthurIdle_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordArthurIdle_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordArthurRunStop_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordArthurRunStop_Bink.bik",
+            "log_msg": "'ZagreusSwordArthurRunStop_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordArthurRunStop_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordArthurRunStop_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordArthurRunStop_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordArthurRun_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordArthurRun_Bink.bik",
+            "log_msg": "'ZagreusSwordArthurRun_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordArthurRun_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordArthurRun_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordArthurRun_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordDashAttack_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordDashAttack_Bink.bik",
+            "log_msg": "'ZagreusSwordDashAttack_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordDashAttack_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordDashAttack_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordDashAttack_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordParry_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordParry_Bink.bik",
+            "log_msg": "'ZagreusSwordParry_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordParry_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordParry_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordParry_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordReturnToIdle_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordReturnToIdle_Bink.bik",
+            "log_msg": "'ZagreusSwordReturnToIdle_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordReturnToIdle_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordReturnToIdle_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordReturnToIdle_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordRunStop_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordRunStop_Bink.bik",
+            "log_msg": "'ZagreusSwordRunStop_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordRunStop_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordRunStop_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordRunStop_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordRun_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordRun_Bink.bik",
+            "log_msg": "'ZagreusSwordRun_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordRun_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordRun_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordRun_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordUpdateAttack1_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordUpdateAttack1_Bink.bik",
+            "log_msg": "'ZagreusSwordUpdateAttack1_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordUpdateAttack1_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordUpdateAttack1_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordUpdateAttack1_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordUpdateAttack2_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordUpdateAttack2_Bink.bik",
+            "log_msg": "'ZagreusSwordUpdateAttack2_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordUpdateAttack2_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordUpdateAttack2_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordUpdateAttack2_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordUpdateAttack3_Bink.bik",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK\\2022\\02-Fevereiro\\ZagreusSwordUpdateAttack3_Bink.bik",
+            "log_msg": "'ZagreusSwordUpdateAttack3_Bink.bik' movido para 'Outros_BIK\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\Hades.v1.38290\\Hades.v1.38290\\Content\\Movies\\720p\\ZagreusSwordUpdateAttack3_Bink.bik_atlas",
+            "destination": "C:/Users/rafae/Downloads\\Outros_BIK_ATLAS\\2022\\02-Fevereiro\\ZagreusSwordUpdateAttack3_Bink.bik_atlas",
+            "log_msg": "'ZagreusSwordUpdateAttack3_Bink.bik_atlas' movido para 'Outros_BIK_ATLAS\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\GUIDs.txt",
+            "destination": "C:/Users/rafae/Downloads\\Documentos\\2022\\02-Fevereiro\\GUIDs.txt",
+            "log_msg": "'GUIDs.txt' movido para 'Documentos\\2022\\02-Fevereiro'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\supermarket_simulator_repack.torrent",
+            "destination": "C:/Users/rafae/Downloads\\Outros_TORRENT\\2025\\07-Julho\\supermarket_simulator_repack.torrent",
+            "log_msg": "'supermarket_simulator_repack.torrent' movido para 'Outros_TORRENT\\2025\\07-Julho'."
+        }
+    ]
 }

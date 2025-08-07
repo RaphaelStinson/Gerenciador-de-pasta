@@ -10,6 +10,8 @@ import pystray
 from PIL import Image, ImageDraw
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
+from datetime import datetime
+from collections import deque
 
 # Importações específicas para Windows
 import sys
@@ -17,21 +19,15 @@ if sys.platform == 'win32':
     import win32com.client
     import pythoncom
 
-# Mapa de extensões padrão, usado apenas na primeira execução
+# --- Constantes e Configurações Padrão ---
+CONFIG_FILE = "config.json"
 DEFAULT_EXTENSION_MAP = {
     '.jpg': 'Imagens', '.jpeg': 'Imagens', '.png': 'Imagens', '.gif': 'Imagens',
-    '.bmp': 'Imagens', '.svg': 'Imagens', '.webp': 'Imagens', '.tiff': 'Imagens',
     '.pdf': 'Documentos', '.docx': 'Documentos', '.doc': 'Documentos',
-    '.txt': 'Documentos', '.pptx': 'Apresentações', '.xlsx': 'Planilhas',
-    '.csv': 'Planilhas', '.odt': 'Documentos',
-    '.mp4': 'Vídeos', '.mov': 'Vídeos', '.avi': 'Vídeos', '.mkv': 'Vídeos',
-    '.mp3': 'Áudios', '.wav': 'Áudios', '.flac': 'Áudios', '.aac': 'Áudios',
-    '.zip': 'Compactados', '.rar': 'Compactados', '.7z': 'Compactados', '.gz': 'Compactados',
-    '.exe': 'Executáveis', '.msi': 'Instaladores',
-    '.py': 'Scripts Python', '.js': 'Scripts JavaScript', '.html': 'Web', '.css': 'Web'
+    '.mp4': 'Vídeos', '.mov': 'Vídeos', '.zip': 'Compactados', '.rar': 'Compactados',
+    '.exe': 'Executáveis', '.mp3': 'Áudios', '.wav': 'Áudios'
 }
-
-CONFIG_FILE = "config.json"
+HISTORY_LIMIT = 100 # Limite de ações no histórico para a função "Desfazer"
 
 class FileOrganizerHandler(FileSystemEventHandler):
     """Manipula os eventos do sistema de arquivos."""
@@ -45,252 +41,337 @@ class FileOrganizerHandler(FileSystemEventHandler):
             self.process(event.src_path)
 
     def process(self, file_path):
-        """Processa e move um único arquivo."""
+        """Processa e move um único arquivo com base nas regras definidas."""
         try:
             if not os.path.exists(file_path): return
             filename = os.path.basename(file_path)
             if filename.startswith('.') or filename.startswith('~'): return
 
-            _, file_extension = os.path.splitext(filename)
-            file_extension = file_extension.lower()
+            # --- Lógica de Destino ---
+            destination_folder_name = None
+            
+            # 1. Prioridade para Regras por Palavra-Chave
+            for keyword, folder in self.app.keyword_rules.items():
+                if keyword.lower() in filename.lower():
+                    destination_folder_name = folder
+                    break
+            
+            # 2. Se não houver correspondência, usar Regras por Extensão
+            if not destination_folder_name:
+                _, file_extension = os.path.splitext(filename)
+                file_extension = file_extension.lower()
+                if file_extension:
+                    destination_folder_name = self.app.extension_map.get(file_extension, f"Outros_{file_extension.replace('.', '').upper()}")
+            
+            if not destination_folder_name:
+                return
 
-            if file_extension:
-                dest_folder_name = self.app.extension_map.get(file_extension, f"Arquivos {file_extension.replace('.', '').upper()}")
-                dest_folder_path = os.path.join(self.watch_directory, dest_folder_name)
+            # --- Montagem do Caminho Final ---
+            final_destination_path = os.path.join(self.watch_directory, destination_folder_name)
 
-                if not os.path.exists(dest_folder_path):
-                    os.makedirs(dest_folder_path)
-                    self.app.log_message(f"Pasta '{dest_folder_name}' criada em '{os.path.basename(self.watch_directory)}'.")
+            # 3. Adicionar Subpastas por Data, se ativado
+            if self.app.organize_by_date_var.get():
+                try:
+                    mod_time = os.path.getmtime(file_path)
+                    date = datetime.fromtimestamp(mod_time)
+                    year_folder = str(date.year)
+                    month_folder = date.strftime("%m-") + self.app.get_month_name(date.month)
+                    final_destination_path = os.path.join(final_destination_path, year_folder, month_folder)
+                except Exception as e:
+                    self.app.log_message(f"Erro ao obter data de '{filename}': {e}. Organizando sem data.")
 
-                shutil.move(file_path, os.path.join(dest_folder_path, filename))
-                self.app.log_message(f"'{filename}' movido para '{dest_folder_name}'.")
+            # --- Mover o Arquivo ---
+            destination_file_path = os.path.join(final_destination_path, filename)
+
+            if os.path.normpath(file_path) == os.path.normpath(destination_file_path):
+                return
+
+            if not os.path.exists(final_destination_path):
+                os.makedirs(final_destination_path)
+            
+            shutil.move(file_path, destination_file_path)
+
+            # --- Registrar Ação ---
+            log_msg = f"'{filename}' movido para '{os.path.relpath(final_destination_path, self.watch_directory)}'."
+            self.app.log_message(log_msg)
+            self.app.add_to_history(file_path, destination_file_path, log_msg)
+
         except Exception as e:
-            self.app.log_message(f"Erro ao processar '{os.path.basename(file_path)}': {e}")
+            self.app.log_message(f"ERRO ao processar '{filename}': {e}")
 
 class App(ctk.CTk):
     def __init__(self, start_minimized=False):
         super().__init__()
-
         self.title("Organizador de Arquivos Automático")
-        self.geometry("800x700")
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(2, weight=1) # Lista de pastas
-        self.grid_rowconfigure(4, weight=1) # Log
+        self.geometry("850x750")
 
         # --- Variáveis de Estado ---
         self.target_directories = []
         self.extension_map = {}
+        self.keyword_rules = {}
+        self.move_history = deque(maxlen=HISTORY_LIMIT)
         self.observers = []
         self.monitoring_thread = None
         self.is_monitoring = False
         self.autostart_var = tk.BooleanVar()
-        self.startup_var = tk.BooleanVar() # Nova variável para iniciar com Windows
+        self.startup_var = tk.BooleanVar()
+        self.organize_by_date_var = tk.BooleanVar()
         self.tray_icon = None
-        self.extensions_window = None
+        self.sub_window = None
 
         self.create_widgets()
         self.load_config()
         self.protocol("WM_DELETE_WINDOW", self.hide_window)
 
-        # Se o app for iniciado com o argumento para minimizar, esconde a janela após um breve momento.
         if start_minimized:
             self.after(100, self.hide_window)
 
     def create_widgets(self):
-        # --- Frame de Controles Superior ---
-        top_controls_frame = ctk.CTkFrame(self)
-        top_controls_frame.grid(row=0, column=0, columnspan=2, padx=20, pady=(20, 10), sticky="ew")
-        top_controls_frame.grid_columnconfigure((0, 1), weight=1)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=1)
 
-        self.add_folder_button = ctk.CTkButton(top_controls_frame, text="Adicionar Pasta", command=self.add_folder)
-        self.add_folder_button.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
-        
-        self.manage_extensions_button = ctk.CTkButton(top_controls_frame, text="Gerenciar Extensões", command=self.open_extensions_window)
-        self.manage_extensions_button.grid(row=0, column=1, padx=10, pady=10, sticky="ew")
+        # --- Sistema de Abas ---
+        self.tab_view = ctk.CTkTabview(self)
+        self.tab_view.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+        self.tab_view.add("Principal")
+        self.tab_view.add("Regras de Extensão")
+        self.tab_view.add("Regras de Palavra-Chave")
+        self.tab_view.add("Histórico")
 
-        # --- Frame com a Lista de Pastas ---
-        self.folder_list_frame = ctk.CTkScrollableFrame(self, label_text="Pastas Monitoradas")
-        self.folder_list_frame.grid(row=2, column=0, columnspan=2, padx=20, pady=10, sticky="nsew")
+        # --- Aba Principal ---
+        self.setup_main_tab()
+        # --- Aba de Extensões ---
+        self.setup_rules_tab(self.tab_view.tab("Regras de Extensão"), "Extensão", self.extension_map, self.add_extension_rule, self.remove_extension_rule)
+        # --- Aba de Palavras-Chave ---
+        self.setup_rules_tab(self.tab_view.tab("Regras de Palavra-Chave"), "Palavra-Chave", self.keyword_rules, self.add_keyword_rule, self.remove_keyword_rule)
+        # --- Aba de Histórico ---
+        self.setup_history_tab()
+
+    def setup_main_tab(self):
+        tab = self.tab_view.tab("Principal")
+        tab.grid_columnconfigure(0, weight=1)
+        tab.grid_rowconfigure(1, weight=1) # Lista de pastas
+        tab.grid_rowconfigure(3, weight=1) # Log
+
+        # Controles de Pastas
+        folder_controls_frame = ctk.CTkFrame(tab)
+        folder_controls_frame.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
+        folder_controls_frame.grid_columnconfigure((0, 1), weight=1)
+        self.add_folder_button = ctk.CTkButton(folder_controls_frame, text="Adicionar Pasta para Monitorar", command=self.add_folder)
+        self.add_folder_button.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        self.create_safe_folder_button = ctk.CTkButton(folder_controls_frame, text="Criar Pasta Segura", command=self.create_safe_folder)
+        self.create_safe_folder_button.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+
+        # Lista de Pastas
+        self.folder_list_frame = ctk.CTkScrollableFrame(tab, label_text="Pastas Monitoradas (só a raiz de cada pasta é monitorada em tempo real)")
+        self.folder_list_frame.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
         self.folder_list_frame.grid_columnconfigure(0, weight=1)
 
-        # --- Frame de Controles (Iniciar/Parar) ---
-        bottom_controls_frame = ctk.CTkFrame(self)
-        bottom_controls_frame.grid(row=3, column=0, columnspan=2, padx=20, pady=10, sticky="ew")
-        bottom_controls_frame.grid_columnconfigure((0, 1), weight=1)
+        # Controles Gerais
+        general_controls_frame = ctk.CTkFrame(tab)
+        general_controls_frame.grid(row=2, column=0, padx=10, pady=10, sticky="ew")
+        general_controls_frame.grid_columnconfigure((0, 1, 2), weight=1)
+        self.start_button = ctk.CTkButton(general_controls_frame, text="Iniciar Monitoramento", command=self.start_monitoring)
+        self.start_button.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        self.stop_button = ctk.CTkButton(general_controls_frame, text="Parar Monitoramento", command=self.stop_monitoring)
+        self.stop_button.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+        self.undo_button = ctk.CTkButton(general_controls_frame, text="Desfazer Última Ação", command=self.undo_last_move)
+        self.undo_button.grid(row=0, column=2, padx=5, pady=5, sticky="ew")
 
-        self.start_button = ctk.CTkButton(bottom_controls_frame, text="Iniciar Monitoramento", command=self.start_monitoring, state="disabled")
-        self.start_button.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
-
-        self.stop_button = ctk.CTkButton(bottom_controls_frame, text="Parar Monitoramento", command=self.stop_monitoring, state="disabled")
-        self.stop_button.grid(row=0, column=1, padx=10, pady=10, sticky="ew")
-        
-        self.autostart_checkbox = ctk.CTkCheckBox(bottom_controls_frame, text="Iniciar monitoramento ao abrir", variable=self.autostart_var, command=self.save_config)
-        self.autostart_checkbox.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="w")
-        
-        self.startup_checkbox = ctk.CTkCheckBox(bottom_controls_frame, text="Iniciar com o Windows", variable=self.startup_var, command=self.toggle_startup)
-        self.startup_checkbox.grid(row=2, column=0, columnspan=2, padx=10, pady=5, sticky="w")
+        # Checkboxes de Configuração
+        checkbox_frame = ctk.CTkFrame(tab)
+        checkbox_frame.grid(row=3, column=0, padx=10, pady=10, sticky="ew")
+        self.autostart_checkbox = ctk.CTkCheckBox(checkbox_frame, text="Iniciar monitoramento ao abrir o programa", variable=self.autostart_var, command=self.save_config)
+        self.autostart_checkbox.pack(anchor="w", padx=10, pady=5)
+        self.organize_by_date_var_checkbox = ctk.CTkCheckBox(checkbox_frame, text="Criar subpastas por Ano/Mês", variable=self.organize_by_date_var, command=self.save_config)
+        self.organize_by_date_var_checkbox.pack(anchor="w", padx=10, pady=5)
+        self.startup_checkbox = ctk.CTkCheckBox(checkbox_frame, text="Iniciar com o Windows (minimizado na bandeja)", variable=self.startup_var, command=self.toggle_startup)
+        self.startup_checkbox.pack(anchor="w", padx=10, pady=5)
         if sys.platform != 'win32':
             self.startup_checkbox.configure(state="disabled", text="Iniciar com o Windows (Apenas no Windows)")
 
-        # --- Caixa de Log ---
-        self.log_textbox = ctk.CTkTextbox(self, state="disabled", wrap="word")
-        self.log_textbox.grid(row=4, column=0, columnspan=2, padx=20, pady=(10, 20), sticky="nsew")
+        # Log
+        self.log_textbox = ctk.CTkTextbox(tab, state="disabled", wrap="word")
+        self.log_textbox.grid(row=4, column=0, padx=10, pady=10, sticky="nsew")
 
-    # --- Lógica de Configuração e Inicialização com Windows ---
+    def setup_rules_tab(self, tab, rule_type, data_dict, add_command, remove_command):
+        tab.grid_columnconfigure(0, weight=1)
+        tab.grid_rowconfigure(1, weight=1)
+
+        add_frame = ctk.CTkFrame(tab)
+        add_frame.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
+        key_placeholder = ".ext" if rule_type == "Extensão" else "Palavra-chave"
+        key_entry = ctk.CTkEntry(add_frame, placeholder_text=key_placeholder)
+        key_entry.pack(side="left", padx=5, pady=5, expand=True, fill="x")
+        folder_entry = ctk.CTkEntry(add_frame, placeholder_text="Nome da Pasta de Destino")
+        folder_entry.pack(side="left", padx=5, pady=5, expand=True, fill="x")
+        add_button = ctk.CTkButton(add_frame, text="Adicionar", width=80, command=lambda: add_command(key_entry.get(), folder_entry.get(), key_entry, folder_entry))
+        add_button.pack(side="left", padx=5, pady=5)
+
+        list_frame = ctk.CTkScrollableFrame(tab, label_text=f"Regras de {rule_type}")
+        list_frame.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
+        self.populate_rules_list(list_frame, data_dict, remove_command)
+
+    def setup_history_tab(self):
+        tab = self.tab_view.tab("Histórico")
+        tab.grid_columnconfigure(0, weight=1)
+        tab.grid_rowconfigure(0, weight=1)
+        self.history_list_frame = ctk.CTkScrollableFrame(tab, label_text="Últimas Ações Realizadas")
+        self.history_list_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+        self.history_list_frame.grid_columnconfigure(0, weight=1)
+
     def load_config(self):
         try:
             if os.path.exists(CONFIG_FILE):
                 with open(CONFIG_FILE, 'r') as f:
                     config = json.load(f)
-                    self.target_directories = config.get("folders", [])
-                    self.autostart_var.set(config.get("autostart", False))
-                    self.extension_map = config.get("extensions", DEFAULT_EXTENSION_MAP.copy())
+                self.target_directories = config.get("folders", [])
+                self.autostart_var.set(config.get("autostart", False))
+                self.organize_by_date_var.set(config.get("organize_by_date", False))
+                self.extension_map = config.get("extensions", DEFAULT_EXTENSION_MAP.copy())
+                self.keyword_rules = config.get("keyword_rules", {})
+                self.move_history = deque(config.get("move_history", []), maxlen=HISTORY_LIMIT)
                 self.log_message("Configurações carregadas.")
             else:
                 self.extension_map = DEFAULT_EXTENSION_MAP.copy()
                 self.log_message("Nenhum arquivo de configuração encontrado. Usando padrões.")
 
-            if sys.platform == 'win32':
-                self.startup_var.set(self.check_if_startup_shortcut_exists())
-
-            self.update_folder_list_ui()
-            self.update_button_states()
-            
-            if self.autostart_var.get() and self.target_directories:
-                self.start_monitoring()
+            if sys.platform == 'win32': self.startup_var.set(self.check_if_startup_shortcut_exists())
+            self.update_all_ui_parts()
+            if self.autostart_var.get() and self.target_directories: self.start_monitoring()
         except Exception as e:
             self.log_message(f"Erro ao carregar config: {e}")
             self.extension_map = DEFAULT_EXTENSION_MAP.copy()
 
     def save_config(self):
-        config = {"folders": self.target_directories, "autostart": self.autostart_var.get(), "extensions": self.extension_map}
+        config = {
+            "folders": self.target_directories,
+            "autostart": self.autostart_var.get(),
+            "organize_by_date": self.organize_by_date_var.get(),
+            "extensions": self.extension_map,
+            "keyword_rules": self.keyword_rules,
+            "move_history": list(self.move_history)
+        }
         with open(CONFIG_FILE, 'w') as f:
             json.dump(config, f, indent=4)
         self.log_message("Configurações salvas.")
 
-    def get_startup_folder_path(self):
-        return os.path.join(os.environ['APPDATA'], 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
-
-    def get_shortcut_path(self):
-        return os.path.join(self.get_startup_folder_path(), "OrganizadorDeArquivos.lnk")
-
-    def check_if_startup_shortcut_exists(self):
-        return os.path.exists(self.get_shortcut_path())
-
-    def toggle_startup(self):
-        if sys.platform != 'win32':
-            self.log_message("Funcionalidade 'Iniciar com o Windows' está disponível apenas no Windows.")
-            return
-
-        shortcut_path = self.get_shortcut_path()
-        # Quando compilado, sys.executable é o caminho para o .exe
-        executable_path = sys.executable
-
-        try:
-            if self.startup_var.get():
-                self.log_message("Adicionando à inicialização do Windows...")
-                pythoncom.CoInitialize()
-                shell = win32com.client.Dispatch("WScript.Shell")
-                shortcut = shell.CreateShortCut(shortcut_path)
-                shortcut.TargetPath = executable_path
-                # Adiciona o argumento para iniciar minimizado
-                shortcut.Arguments = "--start-minimized"
-                shortcut.WorkingDirectory = os.path.dirname(executable_path)
-                shortcut.IconLocation = executable_path
-                shortcut.save()
-                pythoncom.CoUninitialize()
-                self.log_message("Programa configurado para iniciar com o Windows (minimizando na bandeja).")
-            else:
-                if os.path.exists(shortcut_path):
-                    self.log_message("Removendo da inicialização do Windows...")
-                    os.remove(shortcut_path)
-                    self.log_message("Programa removido da inicialização do Windows.")
-        except Exception as e:
-            self.log_message(f"Erro ao configurar inicialização: {e}")
-            messagebox.showerror("Erro", f"Ocorreu um erro ao configurar a inicialização com o Windows.\n\n{e}\n\nTente executar o programa como administrador.")
-            self.startup_var.set(not self.startup_var.get())
-
-    # --- Lógica da Janela de Extensões ---
-    def open_extensions_window(self):
-        if self.extensions_window is not None and self.extensions_window.winfo_exists():
-            self.extensions_window.focus()
-            return
-        self.extensions_window = ctk.CTkToplevel(self)
-        self.extensions_window.title("Gerenciar Extensões")
-        self.extensions_window.geometry("600x500")
-        self.extensions_window.transient(self)
-        add_frame = ctk.CTkFrame(self.extensions_window)
-        add_frame.pack(padx=10, pady=10, fill="x")
-        ext_entry = ctk.CTkEntry(add_frame, placeholder_text=".ext (ex: .zip)")
-        ext_entry.pack(side="left", padx=5, pady=5, expand=True, fill="x")
-        folder_entry = ctk.CTkEntry(add_frame, placeholder_text="Nome da Pasta (ex: Compactados)")
-        folder_entry.pack(side="left", padx=5, pady=5, expand=True, fill="x")
-        add_button = ctk.CTkButton(add_frame, text="Adicionar", width=80, command=lambda: self.add_new_mapping(ext_entry.get(), folder_entry.get(), ext_entry, folder_entry))
-        add_button.pack(side="left", padx=5, pady=5)
-        list_frame = ctk.CTkScrollableFrame(self.extensions_window, label_text="Regras Atuais")
-        list_frame.pack(padx=10, pady=10, expand=True, fill="both")
-        self.populate_extensions_list(list_frame)
-
-    def populate_extensions_list(self, list_frame):
+    def populate_rules_list(self, list_frame, data_dict, remove_command):
         for widget in list_frame.winfo_children(): widget.destroy()
-        sorted_extensions = sorted(self.extension_map.items())
-        for i, (ext, folder) in enumerate(sorted_extensions):
+        sorted_rules = sorted(data_dict.items())
+        for key, folder in sorted_rules:
             item_frame = ctk.CTkFrame(list_frame)
             item_frame.pack(fill="x", padx=5, pady=2)
             item_frame.grid_columnconfigure(0, weight=1)
-            label = ctk.CTkLabel(item_frame, text=f"{ext:<15} -> {folder}", font=ctk.CTkFont(family="monospace"))
+            label = ctk.CTkLabel(item_frame, text=f"'{key}'  ->  '{folder}'", font=ctk.CTkFont(family="monospace"))
             label.grid(row=0, column=0, padx=10, pady=5, sticky="w")
-            remove_button = ctk.CTkButton(item_frame, text="Remover", width=80, fg_color="red", hover_color="darkred", command=lambda e=ext: self.remove_mapping(e, list_frame))
+            remove_button = ctk.CTkButton(item_frame, text="Remover", width=80, fg_color="red", hover_color="darkred", command=lambda k=key: remove_command(k))
             remove_button.grid(row=0, column=1, padx=10, pady=5, sticky="e")
 
-    def add_new_mapping(self, ext, folder, ext_entry, folder_entry):
-        if not ext or not folder:
-            messagebox.showwarning("Aviso", "Ambos os campos devem ser preenchidos.", parent=self.extensions_window)
-            return
+    def add_extension_rule(self, ext, folder, key_entry, folder_entry):
+        if not ext or not folder: return
         if not ext.startswith('.'): ext = '.' + ext
-        ext = ext.lower()
-        self.extension_map[ext] = folder
+        self.extension_map[ext.lower()] = folder
         self.save_config()
-        self.populate_extensions_list(self.extensions_window.winfo_children()[1])
-        ext_entry.delete(0, "end")
-        folder_entry.delete(0, "end")
+        self.update_rules_tab_ui("Regras de Extensão")
+        key_entry.delete(0, "end"); folder_entry.delete(0, "end")
 
-    def remove_mapping(self, ext, list_frame):
+    def remove_extension_rule(self, ext):
         if ext in self.extension_map:
             del self.extension_map[ext]
             self.save_config()
-            self.populate_extensions_list(list_frame)
+            self.update_rules_tab_ui("Regras de Extensão")
 
-    # --- Lógica Principal da Aplicação ---
-    def add_folder(self):
-        folder_selected = filedialog.askdirectory()
-        if folder_selected and folder_selected not in self.target_directories:
-            self.target_directories.append(folder_selected)
-            self.update_folder_list_ui()
-            self.update_button_states()
+    def add_keyword_rule(self, keyword, folder, key_entry, folder_entry):
+        if not keyword or not folder: return
+        self.keyword_rules[keyword] = folder
+        self.save_config()
+        self.update_rules_tab_ui("Regras de Palavra-Chave")
+        key_entry.delete(0, "end"); folder_entry.delete(0, "end")
+
+    def remove_keyword_rule(self, keyword):
+        if keyword in self.keyword_rules:
+            del self.keyword_rules[keyword]
             self.save_config()
+            self.update_rules_tab_ui("Regras de Palavra-Chave")
 
-    def remove_folder(self, folder_to_remove):
-        self.target_directories.remove(folder_to_remove)
-        self.update_folder_list_ui()
+    def add_to_history(self, source, destination, log_msg):
+        self.move_history.append({"source": source, "destination": destination, "log_msg": log_msg})
+        self.update_history_tab_ui()
         self.update_button_states()
         self.save_config()
 
+    def undo_last_move(self):
+        if not self.move_history:
+            self.log_message("Nenhuma ação para desfazer.")
+            return
+        last_action = self.move_history.pop()
+        source_path_original = last_action["source"]
+        dest_path = last_action["destination"]
+        try:
+            source_dir = os.path.dirname(source_path_original)
+            if not os.path.exists(source_dir):
+                os.makedirs(source_dir)
+            
+            shutil.move(dest_path, source_path_original)
+            self.log_message(f"DESFEITO: '{os.path.basename(source_path_original)}' retornado para sua origem.")
+            self.update_history_tab_ui()
+            self.save_config()
+        except Exception as e:
+            self.log_message(f"ERRO ao desfazer: {e}")
+            self.move_history.append(last_action)
+        self.update_button_states()
+
+    def update_all_ui_parts(self):
+        self.update_folder_list_ui()
+        self.update_rules_tab_ui("Regras de Extensão")
+        self.update_rules_tab_ui("Regras de Palavra-Chave")
+        self.update_history_tab_ui()
+        self.update_button_states()
+
     def update_folder_list_ui(self):
         for widget in self.folder_list_frame.winfo_children(): widget.destroy()
-        for i, folder in enumerate(self.target_directories):
+        for folder in self.target_directories:
             item_frame = ctk.CTkFrame(self.folder_list_frame)
             item_frame.pack(fill="x", padx=5, pady=2)
             item_frame.grid_columnconfigure(0, weight=1)
-            label = ctk.CTkLabel(item_frame, text=folder, wraplength=550)
+            label = ctk.CTkLabel(item_frame, text=folder, wraplength=600)
             label.grid(row=0, column=0, padx=10, pady=5, sticky="w")
             remove_button = ctk.CTkButton(item_frame, text="Remover", width=80, command=lambda f=folder: self.remove_folder(f))
             remove_button.grid(row=0, column=1, padx=10, pady=5, sticky="e")
 
+    def update_rules_tab_ui(self, tab_name):
+        if tab_name == "Regras de Extensão":
+            self.populate_rules_list(self.tab_view.tab(tab_name).winfo_children()[1], self.extension_map, self.remove_extension_rule)
+        elif tab_name == "Regras de Palavra-Chave":
+            self.populate_rules_list(self.tab_view.tab(tab_name).winfo_children()[1], self.keyword_rules, self.remove_keyword_rule)
+
+    def update_history_tab_ui(self):
+        for widget in self.history_list_frame.winfo_children(): widget.destroy()
+        for action in reversed(self.move_history):
+            label = ctk.CTkLabel(self.history_list_frame, text=action["log_msg"], wraplength=700, justify="left")
+            label.pack(anchor="w", padx=10, pady=2)
+
+    def update_button_states(self):
+        is_monitoring = self.is_monitoring
+        has_folders = bool(self.target_directories)
+        has_history = bool(self.move_history)
+
+        self.start_button.configure(state="normal" if not is_monitoring and has_folders else "disabled")
+        self.stop_button.configure(state="normal" if is_monitoring else "disabled")
+        self.undo_button.configure(state="normal" if not is_monitoring and has_history else "disabled")
+        self.add_folder_button.configure(state="normal" if not is_monitoring else "disabled")
+        self.create_safe_folder_button.configure(state="normal" if not is_monitoring and has_folders else "disabled")
+        
+        self.autostart_checkbox.configure(state="normal" if not is_monitoring else "disabled")
+        self.organize_by_date_var_checkbox.configure(state="normal" if not is_monitoring else "disabled")
+        if sys.platform == 'win32': self.startup_checkbox.configure(state="normal" if not is_monitoring else "disabled")
+
+        for item_frame in self.folder_list_frame.winfo_children():
+            item_frame.winfo_children()[1].configure(state="normal" if not is_monitoring else "disabled")
+    
     def start_monitoring(self):
-        if not self.target_directories:
-            messagebox.showwarning("Aviso", "Adicione pelo menos uma pasta para monitorar.")
-            return
+        if not self.target_directories: return
         if self.is_monitoring: return
         self.is_monitoring = True
         self.update_button_states()
@@ -300,14 +381,14 @@ class App(ctk.CTk):
                 self.organize_existing_files(directory)
                 event_handler = FileOrganizerHandler(directory, self)
                 observer = Observer()
+                # recursive=False garante que só a pasta raiz é monitorada em tempo real.
                 observer.schedule(event_handler, directory, recursive=False)
                 observer.start()
                 self.observers.append(observer)
             self.log_message("Monitoramento em tempo real iniciado.")
             while self.is_monitoring: time.sleep(1)
             for observer in self.observers:
-                observer.stop()
-                observer.join()
+                observer.stop(); observer.join()
             self.log_message("Monitoramento parado.")
         self.monitoring_thread = threading.Thread(target=monitor_task, daemon=True)
         self.monitoring_thread.start()
@@ -316,48 +397,99 @@ class App(ctk.CTk):
         if self.is_monitoring:
             self.is_monitoring = False
             self.update_button_states()
-
+    
     def organize_existing_files(self, directory):
-        self.log_message(f"Organizando arquivos existentes em: {directory}")
+        """Varre APENAS A RAIZ do diretório e aplica as regras."""
+        self.log_message(f"Verificando arquivos na raiz de: {os.path.basename(directory)}")
         handler = FileOrganizerHandler(directory, self)
         try:
             for filename in os.listdir(directory):
                 file_path = os.path.join(directory, filename)
-                if os.path.isfile(file_path): handler.process(file_path)
-            self.log_message(f"Organização inicial de '{os.path.basename(directory)}' concluída.")
+                # Processa apenas se for um arquivo, ignorando subpastas.
+                if os.path.isfile(file_path):
+                    handler.process(file_path)
         except Exception as e:
-            self.log_message(f"Erro na organização inicial: {e}")
+            self.log_message(f"Erro na varredura inicial: {e}")
 
-    def update_button_states(self):
-        has_folders = bool(self.target_directories)
-        if self.is_monitoring:
-            self.start_button.configure(state="disabled")
-            self.stop_button.configure(state="normal")
-            self.add_folder_button.configure(state="disabled")
-            self.manage_extensions_button.configure(state="disabled")
-            self.autostart_checkbox.configure(state="disabled")
-            if sys.platform == 'win32': self.startup_checkbox.configure(state="disabled")
-            for item_frame in self.folder_list_frame.winfo_children():
-                item_frame.winfo_children()[1].configure(state="disabled")
-        else:
-            self.start_button.configure(state="normal" if has_folders else "disabled")
-            self.stop_button.configure(state="disabled")
-            self.add_folder_button.configure(state="normal")
-            self.manage_extensions_button.configure(state="normal")
-            self.autostart_checkbox.configure(state="normal")
-            if sys.platform == 'win32': self.startup_checkbox.configure(state="normal")
-            for item_frame in self.folder_list_frame.winfo_children():
-                item_frame.winfo_children()[1].configure(state="normal")
+    def get_month_name(self, month_number):
+        months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+        return months[month_number - 1]
+
+    def add_folder(self):
+        folder_selected = filedialog.askdirectory()
+        if folder_selected and folder_selected not in self.target_directories:
+            self.target_directories.append(folder_selected)
+            self.update_all_ui_parts()
+            self.save_config()
+
+    def remove_folder(self, folder_to_remove):
+        self.target_directories.remove(folder_to_remove)
+        self.update_all_ui_parts()
+        self.save_config()
+        
+    def create_safe_folder(self):
+        if not self.target_directories:
+            messagebox.showwarning("Aviso", "Adicione e selecione uma pasta monitorada primeiro.")
+            return
+        
+        dialog = ctk.CTkInputDialog(text="Digite o nome da nova pasta segura:", title="Criar Pasta Segura")
+        folder_name = dialog.get_input()
+        
+        if folder_name:
+            try:
+                # Cria a pasta dentro do primeiro diretório da lista
+                safe_folder_path = os.path.join(self.target_directories[0], folder_name)
+                if not os.path.exists(safe_folder_path):
+                    os.makedirs(safe_folder_path)
+                    self.log_message(f"Pasta segura '{folder_name}' criada em '{self.target_directories[0]}'.")
+                else:
+                    self.log_message(f"A pasta '{folder_name}' já existe.")
+            except Exception as e:
+                self.log_message(f"Erro ao criar pasta segura: {e}")
+
 
     def log_message(self, message):
         def _update_log():
             self.log_textbox.configure(state="normal")
-            self.log_textbox.insert("end", f"{message}\n")
+            self.log_textbox.insert("end", f"[{datetime.now().strftime('%H:%M:%S')}] {message}\n")
             self.log_textbox.see("end")
             self.log_textbox.configure(state="disabled")
         self.after(0, _update_log)
 
-    # --- Lógica da Bandeja do Sistema ---
+    def toggle_startup(self):
+        if sys.platform != 'win32': return
+        shortcut_path = self.get_shortcut_path()
+        executable_path = sys.executable
+        try:
+            if self.startup_var.get():
+                pythoncom.CoInitialize()
+                shell = win32com.client.Dispatch("WScript.Shell")
+                shortcut = shell.CreateShortCut(shortcut_path)
+                shortcut.TargetPath = executable_path
+                shortcut.Arguments = "--start-minimized"
+                shortcut.WorkingDirectory = os.path.dirname(executable_path)
+                shortcut.IconLocation = executable_path
+                shortcut.save()
+                pythoncom.CoUninitialize()
+                self.log_message("Configurado para iniciar com o Windows.")
+            else:
+                if os.path.exists(shortcut_path):
+                    os.remove(shortcut_path)
+                    self.log_message("Removido da inicialização do Windows.")
+        except Exception as e:
+            self.log_message(f"Erro ao configurar inicialização: {e}")
+            messagebox.showerror("Erro", f"Ocorreu um erro: {e}\nTente executar como administrador.")
+            self.startup_var.set(not self.startup_var.get())
+    
+    def get_startup_folder_path(self):
+        return os.path.join(os.environ['APPDATA'], 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
+
+    def get_shortcut_path(self):
+        return os.path.join(self.get_startup_folder_path(), "OrganizadorDeArquivos.lnk")
+
+    def check_if_startup_shortcut_exists(self):
+        return os.path.exists(self.get_shortcut_path())
+
     def create_tray_image(self):
         width, height, color1, color2 = 64, 64, (20, 20, 120), (100, 180, 255)
         image = Image.new('RGB', (width, height), color1)
@@ -380,7 +512,6 @@ class App(ctk.CTk):
         self.deiconify()
 
     def quit_app(self):
-        if self.extensions_window: self.extensions_window.destroy()
         self.save_config()
         if self.tray_icon: self.tray_icon.stop()
         if self.is_monitoring:
@@ -389,9 +520,7 @@ class App(ctk.CTk):
         self.destroy()
 
 if __name__ == "__main__":
-    # Verifica se o argumento --start-minimized foi passado
     start_minimized_arg = '--start-minimized' in sys.argv
-
     ctk.set_appearance_mode("System")
     ctk.set_default_color_theme("blue")
     app = App(start_minimized=start_minimized_arg)
