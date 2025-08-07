@@ -18,8 +18,15 @@
         ".rar": "Compactados",
         ".exe": "Executáveis",
         ".mp3": "Áudios",
-        ".wav": "Áudios"
+        ".wav": "Áudios",
+        ".iso": "ISO"
     },
     "keyword_rules": {},
-    "move_history": []
+    "move_history": [
+        {
+            "source": "C:/Users/rafae/Downloads\\kali-linux-2025.2-installer-amd64.iso",
+            "destination": "C:/Users/rafae/Downloads\\ISO\\2025\\07-Julho\\kali-linux-2025.2-installer-amd64.iso",
+            "log_msg": "'kali-linux-2025.2-installer-amd64.iso' movido para 'ISO\\2025\\07-Julho'."
+        }
+    ]
 }

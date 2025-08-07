@@ -414,7 +414,6 @@ class App(ctk.CTk):
         handler = FileOrganizerHandler(directory, self)
         try:
             for filename in os.listdir(directory):
-                # CORREÇÃO: Verifica se a monitorização deve parar a meio da verificação
                 if not self.is_monitoring:
                     self.log_message("A verificação inicial foi cancelada pelo utilizador.")
                     return
@@ -442,20 +441,31 @@ class App(ctk.CTk):
         
     def create_safe_folder(self):
         if not self.target_directories:
-            messagebox.showwarning("Aviso", "Adicione e selecione uma pasta monitorizada primeiro.")
+            messagebox.showwarning("Aviso", "Adicione uma pasta para monitorizar primeiro.", parent=self)
             return
         
+        # Permite ao utilizador escolher onde criar a pasta segura
+        initial_dir = self.target_directories[0] if self.target_directories else os.path.expanduser("~")
+        parent_folder = filedialog.askdirectory(
+            title="Selecione onde criar a Pasta Segura",
+            initialdir=initial_dir,
+            parent=self
+        )
+        
+        if not parent_folder:
+            return # Utilizador cancelou a seleção de pasta
+
         dialog = ctk.CTkInputDialog(text="Digite o nome da nova pasta segura:", title="Criar Pasta Segura")
         folder_name = dialog.get_input()
         
         if folder_name:
             try:
-                safe_folder_path = os.path.join(self.target_directories[0], folder_name)
+                safe_folder_path = os.path.join(parent_folder, folder_name)
                 if not os.path.exists(safe_folder_path):
                     os.makedirs(safe_folder_path)
-                    self.log_message(f"Pasta segura '{folder_name}' criada em '{self.target_directories[0]}'.")
+                    self.log_message(f"Pasta segura '{folder_name}' criada em '{parent_folder}'.")
                 else:
-                    self.log_message(f"A pasta '{folder_name}' já existe.")
+                    self.log_message(f"A pasta '{folder_name}' já existe em '{parent_folder}'.")
             except Exception as e:
                 self.log_message(f"Erro ao criar pasta segura: {e}")
 
