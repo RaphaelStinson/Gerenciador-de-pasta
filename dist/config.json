@@ -19,7 +19,8 @@
         ".exe": "Executáveis",
         ".mp3": "Áudios",
         ".wav": "Áudios",
-        ".iso": "ISO"
+        ".iso": "ISO",
+        ".webp": "Imagens"
     },
     "keyword_rules": {},
     "move_history": [
@@ -52,6 +53,16 @@
             "source": "C:/Users/rafae/Downloads\\e259f049-582a-472a-b327-8d1f63b5fe1c.tmp",
             "destination": "C:/Users/rafae/Downloads\\Outros_TMP\\2025\\08-Agosto\\e259f049-582a-472a-b327-8d1f63b5fe1c.tmp",
             "log_msg": "'e259f049-582a-472a-b327-8d1f63b5fe1c.tmp' movido para 'Outros_TMP\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\b011b5e8-0ce4-4064-aa23-98ae9153b07e.tmp",
+            "destination": "C:/Users/rafae/Downloads\\Outros_TMP\\2025\\08-Agosto\\b011b5e8-0ce4-4064-aa23-98ae9153b07e.tmp",
+            "log_msg": "'b011b5e8-0ce4-4064-aa23-98ae9153b07e.tmp' movido para 'Outros_TMP\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\iStock-536613027-1024x683.webp",
+            "destination": "C:/Users/rafae/Downloads\\Imagens\\2025\\08-Agosto\\iStock-536613027-1024x683.webp",
+            "log_msg": "'iStock-536613027-1024x683.webp' movido para 'Imagens\\2025\\08-Agosto'."
         }
     ]
 }

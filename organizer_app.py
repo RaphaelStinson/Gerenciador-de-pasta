@@ -33,6 +33,8 @@ DEFAULT_EXTENSION_MAP = {
     '.exe': 'Executáveis', '.mp3': 'Áudios', '.wav': 'Áudios'
 }
 HISTORY_LIMIT = 100 # Limite de ações no histórico para a função "Desfazer"
+# Lista de extensões temporárias a serem ignoradas para evitar erros de download
+TEMP_EXTENSIONS = {'.tmp', '.crdownload', '.part'}
 
 class FileOrganizerHandler(FileSystemEventHandler):
     """Manipula os eventos do sistema de ficheiros."""
@@ -42,8 +44,47 @@ class FileOrganizerHandler(FileSystemEventHandler):
 
     def on_created(self, event):
         if not event.is_directory:
-            time.sleep(1)
-            self.process(event.src_path)
+            # Adiciona uma verificação mais robusta para garantir que o ficheiro está completo
+            self.wait_for_file_to_be_ready(event.src_path)
+
+    def wait_for_file_to_be_ready(self, file_path):
+        """Espera até que um ficheiro não esteja mais a ser modificado antes de o processar."""
+        try:
+            if not os.path.exists(file_path):
+                return
+
+            # Ignora imediatamente ficheiros temporários conhecidos
+            _, file_extension = os.path.splitext(file_path)
+            if file_extension.lower() in TEMP_EXTENSIONS:
+                return
+
+            # Espera até que o tamanho do ficheiro se estabilize
+            last_size = -1
+            stable_count = 0
+            max_stable_count = 3  # Requer 3 segundos de estabilidade
+
+            while stable_count < max_stable_count:
+                if not os.path.exists(file_path):
+                    return # O ficheiro foi removido durante a verificação
+
+                current_size = os.path.getsize(file_path)
+                if current_size == last_size and current_size != 0:
+                    stable_count += 1
+                else:
+                    stable_count = 0 # Reinicia a contagem se o tamanho mudar
+                
+                last_size = current_size
+                time.sleep(1)
+            
+            # Se o ficheiro ainda existir após a espera, processa-o
+            if os.path.exists(file_path):
+                self.process(file_path)
+
+        except (FileNotFoundError, PermissionError):
+            # Ignora erros se o ficheiro for removido ou estiver bloqueado
+            pass
+        except Exception as e:
+            self.app.log_message(f"Erro ao verificar ficheiro '{os.path.basename(file_path)}': {e}")
 
     def process(self, file_path):
         """Processa e move um único ficheiro com base nas regras definidas."""
