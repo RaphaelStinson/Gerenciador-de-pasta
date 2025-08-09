@@ -27,6 +27,21 @@
             "source": "C:/Users/rafae/Downloads\\kali-linux-2025.2-installer-amd64.iso",
             "destination": "C:/Users/rafae/Downloads\\ISO\\2025\\07-Julho\\kali-linux-2025.2-installer-amd64.iso",
             "log_msg": "'kali-linux-2025.2-installer-amd64.iso' movido para 'ISO\\2025\\07-Julho'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\lexico (1).txt",
+            "destination": "C:/Users/rafae/Downloads\\Outros_TXT\\2025\\08-Agosto\\lexico (1).txt",
+            "log_msg": "'lexico (1).txt' movido para 'Outros_TXT\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\lexico.txt",
+            "destination": "C:/Users/rafae/Downloads\\Outros_TXT\\2025\\08-Agosto\\lexico.txt",
+            "log_msg": "'lexico.txt' movido para 'Outros_TXT\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\hwmonitor_1.58.exe",
+            "destination": "C:/Users/rafae/Downloads\\Executáveis\\2025\\08-Agosto\\hwmonitor_1.58.exe",
+            "log_msg": "'hwmonitor_1.58.exe' movido para 'Executáveis\\2025\\08-Agosto'."
         }
     ]
 }
