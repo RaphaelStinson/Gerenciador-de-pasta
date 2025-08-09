@@ -113,8 +113,11 @@ class FileOrganizerHandler(FileSystemEventHandler):
                 _, file_extension = os.path.splitext(filename)
                 file_extension = file_extension.lower()
                 if file_extension:
-                    destination_folder_name = self.app.extension_map.get(file_extension, f"Outros_{file_extension.replace('.', '').upper()}")
-            
+                    destination_folder_name = self.app.extension_map.get(file_extension)
+                    # Se não houver regra e a opção de ignorar estiver desativada, cria a pasta "Outros"
+                    if not destination_folder_name and not self.app.ignore_unknown_var.get():
+                        destination_folder_name = f"Outros_{file_extension.replace('.', '').upper()}"
+
             if not destination_folder_name:
                 return
 
@@ -168,6 +171,7 @@ class App(ctk.CTk):
         self.autostart_var = tk.BooleanVar()
         self.startup_var = tk.BooleanVar()
         self.organize_by_date_var = tk.BooleanVar()
+        self.ignore_unknown_var = tk.BooleanVar() # Nova variável
         self.tray_icon = None
         self.sub_window = None
         self.mutex = None # Variável para guardar o handle do mutex
@@ -211,8 +215,9 @@ class App(ctk.CTk):
     def setup_main_tab(self):
         tab = self.tab_view.tab("Principal")
         tab.grid_columnconfigure(0, weight=1)
+        # CORREÇÃO: Define o peso para as linhas corretas para garantir a expansão
         tab.grid_rowconfigure(1, weight=1) # Lista de pastas
-        tab.grid_rowconfigure(3, weight=1) # Log
+        tab.grid_rowconfigure(4, weight=1) # Log
 
         # Controles de Pastas
         folder_controls_frame = ctk.CTkFrame(tab)
@@ -248,6 +253,8 @@ class App(ctk.CTk):
         self.organize_by_date_var_checkbox.pack(anchor="w", padx=10, pady=5)
         self.startup_checkbox = ctk.CTkCheckBox(checkbox_frame, text="Iniciar com o Windows (minimizado na bandeja)", variable=self.startup_var, command=self.toggle_startup)
         self.startup_checkbox.pack(anchor="w", padx=10, pady=5)
+        self.ignore_unknown_checkbox = ctk.CTkCheckBox(checkbox_frame, text="Ignorar ficheiros sem regra definida (não criar pastas 'Outros')", variable=self.ignore_unknown_var, command=self.save_config)
+        self.ignore_unknown_checkbox.pack(anchor="w", padx=10, pady=5)
         if sys.platform != 'win32':
             self.startup_checkbox.configure(state="disabled", text="Iniciar com o Windows (Apenas no Windows)")
 
@@ -300,6 +307,7 @@ class App(ctk.CTk):
                 self.target_directories = config.get("folders", [])
                 self.autostart_var.set(config.get("autostart", False))
                 self.organize_by_date_var.set(config.get("organize_by_date", False))
+                self.ignore_unknown_var.set(config.get("ignore_unknown", False))
                 self.extension_map = config.get("extensions", DEFAULT_EXTENSION_MAP.copy())
                 self.keyword_rules = config.get("keyword_rules", {})
                 self.move_history = deque(config.get("move_history", []), maxlen=HISTORY_LIMIT)
@@ -320,6 +328,7 @@ class App(ctk.CTk):
             "folders": self.target_directories,
             "autostart": self.autostart_var.get(),
             "organize_by_date": self.organize_by_date_var.get(),
+            "ignore_unknown": self.ignore_unknown_var.get(),
             "extensions": self.extension_map,
             "keyword_rules": self.keyword_rules,
             "move_history": list(self.move_history)
@@ -475,6 +484,7 @@ class App(ctk.CTk):
         
         self.autostart_checkbox.configure(state="normal" if not is_monitoring else "disabled")
         self.organize_by_date_var_checkbox.configure(state="normal" if not is_monitoring else "disabled")
+        self.ignore_unknown_checkbox.configure(state="normal" if not is_monitoring else "disabled")
         if sys.platform == 'win32': self.startup_checkbox.configure(state="normal" if not is_monitoring else "disabled")
 
         for item_frame in self.folder_list_frame.winfo_children():

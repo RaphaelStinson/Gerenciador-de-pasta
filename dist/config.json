@@ -4,6 +4,7 @@
     ],
     "autostart": true,
     "organize_by_date": true,
+    "ignore_unknown": true,
     "extensions": {
         ".jpg": "Imagens",
         ".jpeg": "Imagens",
@@ -126,6 +127,16 @@
             "source": "C:/Users/rafae/Downloads\\images.png",
             "destination": "C:/Users/rafae/Downloads\\Imagens\\2025\\08-Agosto\\images.png",
             "log_msg": "'images.png' movido para 'Imagens\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\lexico.txt",
+            "destination": "C:/Users/rafae/Downloads\\Documentos\\2025\\08-Agosto\\lexico.txt",
+            "log_msg": "'lexico.txt' movido para 'Documentos\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\lexico (1).txt",
+            "destination": "C:/Users/rafae/Downloads\\Documentos\\2025\\08-Agosto\\lexico (1).txt",
+            "log_msg": "'lexico (1).txt' movido para 'Documentos\\2025\\08-Agosto'."
         }
     ]
 }
