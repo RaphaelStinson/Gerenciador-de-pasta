@@ -1,5 +1,9 @@
 # Gerenciador de Pastas
 
+<p align="center">
+<img alt="Imagem de CriptoApp" width="500px" src="https://imgur.com/YjjSYia.png">
+</p>
+
 ## 📖 Sobre o Projeto
 
 O **Gerenciador de Pastas** é uma aplicação de desktop desenvolvida em Python com uma interface gráfica feita em Tkinter. A sua principal função é automatizar a organização de arquivos em um diretório específico. Ele move os arquivos para pastas correspondentes aos seus tipos (ex: `.pdf`, `.docx`, `.jpg`), mantendo sua área de trabalho ou pasta de downloads sempre organizada.

@@ -42,6 +42,16 @@
             "source": "C:/Users/rafae/Downloads\\hwmonitor_1.58.exe",
             "destination": "C:/Users/rafae/Downloads\\Executáveis\\2025\\08-Agosto\\hwmonitor_1.58.exe",
             "log_msg": "'hwmonitor_1.58.exe' movido para 'Executáveis\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\41f9af9a-9b2b-4162-afa1-091b7a6b87a4.tmp",
+            "destination": "C:/Users/rafae/Downloads\\Outros_TMP\\2025\\08-Agosto\\41f9af9a-9b2b-4162-afa1-091b7a6b87a4.tmp",
+            "log_msg": "'41f9af9a-9b2b-4162-afa1-091b7a6b87a4.tmp' movido para 'Outros_TMP\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\e259f049-582a-472a-b327-8d1f63b5fe1c.tmp",
+            "destination": "C:/Users/rafae/Downloads\\Outros_TMP\\2025\\08-Agosto\\e259f049-582a-472a-b327-8d1f63b5fe1c.tmp",
+            "log_msg": "'e259f049-582a-472a-b327-8d1f63b5fe1c.tmp' movido para 'Outros_TMP\\2025\\08-Agosto'."
         }
     ]
 }
