@@ -108,6 +108,3 @@ Se você deseja modificar o código ou construir o executável por conta própri
   * **Raphael Stinson**
 
 <!-- end list -->
-
-```
-```
