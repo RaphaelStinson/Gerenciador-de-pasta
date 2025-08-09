@@ -1,4 +1,3 @@
-````markdown
 # Gerenciador de Pastas
 
 ## 📖 Sobre o Projeto
