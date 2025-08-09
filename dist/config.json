@@ -9,17 +9,35 @@
         ".jpeg": "Imagens",
         ".png": "Imagens",
         ".gif": "Imagens",
+        ".bmp": "Imagens",
+        ".svg": "Imagens",
+        ".tiff": "Imagens",
         ".pdf": "Documentos",
         ".docx": "Documentos",
         ".doc": "Documentos",
+        ".txt": "Documentos",
+        ".pptx": "Apresentações",
+        ".xlsx": "Planilhas",
+        ".csv": "Planilhas",
+        ".odt": "Documentos",
         ".mp4": "Vídeos",
         ".mov": "Vídeos",
-        ".zip": "Compactados",
-        ".rar": "Compactados",
-        ".exe": "Executáveis",
+        ".avi": "Vídeos",
+        ".mkv": "Vídeos",
         ".mp3": "Áudios",
         ".wav": "Áudios",
-        ".iso": "ISO",
+        ".flac": "Áudios",
+        ".aac": "Áudios",
+        ".rar": "Compactados",
+        ".7z": "Compactados",
+        ".gz": "Compactados",
+        ".exe": "Executáveis",
+        ".msi": "Instaladores",
+        ".py": "Scripts Python",
+        ".js": "Scripts JavaScript",
+        ".html": "Web",
+        ".css": "Web",
+        ".zip": "Compactados",
         ".webp": "Imagens"
     },
     "keyword_rules": {},
@@ -63,6 +81,51 @@
             "source": "C:/Users/rafae/Downloads\\iStock-536613027-1024x683.webp",
             "destination": "C:/Users/rafae/Downloads\\Imagens\\2025\\08-Agosto\\iStock-536613027-1024x683.webp",
             "log_msg": "'iStock-536613027-1024x683.webp' movido para 'Imagens\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\favicon.zip",
+            "destination": "C:/Users/rafae/Downloads\\Outros_ZIP\\2025\\07-Julho\\favicon.zip",
+            "log_msg": "'favicon.zip' movido para 'Outros_ZIP\\2025\\07-Julho'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\apache-maven-3.8.9-bin.zip",
+            "destination": "C:/Users/rafae/Downloads\\Outros_ZIP\\2025\\07-Julho\\apache-maven-3.8.9-bin.zip",
+            "log_msg": "'apache-maven-3.8.9-bin.zip' movido para 'Outros_ZIP\\2025\\07-Julho'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\apache-maven-3.8.9-bin.zip",
+            "destination": "C:/Users/rafae/Downloads\\Compactados\\2025\\07-Julho\\apache-maven-3.8.9-bin.zip",
+            "log_msg": "'apache-maven-3.8.9-bin.zip' movido para 'Compactados\\2025\\07-Julho'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\favicon.zip",
+            "destination": "C:/Users/rafae/Downloads\\Compactados\\2025\\07-Julho\\favicon.zip",
+            "log_msg": "'favicon.zip' movido para 'Compactados\\2025\\07-Julho'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\iStock-536613027-1024x683.webp",
+            "destination": "C:/Users/rafae/Downloads\\Outros_WEBP\\2025\\08-Agosto\\iStock-536613027-1024x683.webp",
+            "log_msg": "'iStock-536613027-1024x683.webp' movido para 'Outros_WEBP\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\iStock-536613027-1024x683.webp",
+            "destination": "C:/Users/rafae/Downloads\\Imagens\\2025\\08-Agosto\\iStock-536613027-1024x683.webp",
+            "log_msg": "'iStock-536613027-1024x683.webp' movido para 'Imagens\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\icon.jpg",
+            "destination": "C:/Users/rafae/Downloads\\Imagens\\2025\\07-Julho\\icon.jpg",
+            "log_msg": "'icon.jpg' movido para 'Imagens\\2025\\07-Julho'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\icon-removebg-preview.png",
+            "destination": "C:/Users/rafae/Downloads\\Imagens\\2025\\07-Julho\\icon-removebg-preview.png",
+            "log_msg": "'icon-removebg-preview.png' movido para 'Imagens\\2025\\07-Julho'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\images.png",
+            "destination": "C:/Users/rafae/Downloads\\Imagens\\2025\\08-Agosto\\images.png",
+            "log_msg": "'images.png' movido para 'Imagens\\2025\\08-Agosto'."
         }
     ]
 }

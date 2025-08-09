@@ -28,9 +28,15 @@ if sys.platform == 'win32':
 CONFIG_FILE = "config.json"
 DEFAULT_EXTENSION_MAP = {
     '.jpg': 'Imagens', '.jpeg': 'Imagens', '.png': 'Imagens', '.gif': 'Imagens',
+    '.bmp': 'Imagens', '.svg': 'Imagens', '.webp': 'Imagens', '.tiff': 'Imagens',
     '.pdf': 'Documentos', '.docx': 'Documentos', '.doc': 'Documentos',
-    '.mp4': 'Vídeos', '.mov': 'Vídeos', '.zip': 'Compactados', '.rar': 'Compactados',
-    '.exe': 'Executáveis', '.mp3': 'Áudios', '.wav': 'Áudios'
+    '.txt': 'Documentos', '.pptx': 'Apresentações', '.xlsx': 'Planilhas',
+    '.csv': 'Planilhas', '.odt': 'Documentos',
+    '.mp4': 'Vídeos', '.mov': 'Vídeos', '.avi': 'Vídeos', '.mkv': 'Vídeos',
+    '.mp3': 'Áudios', '.wav': 'Áudios', '.flac': 'Áudios', '.aac': 'Áudios',
+    '.zip': 'Compactados', '.rar': 'Compactados', '.7z': 'Compactados', '.gz': 'Compactados',
+    '.exe': 'Executáveis', '.msi': 'Instaladores',
+    '.py': 'Scripts Python', '.js': 'Scripts JavaScript', '.html': 'Web', '.css': 'Web'
 }
 HISTORY_LIMIT = 100 # Limite de ações no histórico para a função "Desfazer"
 # Lista de extensões temporárias a serem ignoradas para evitar erros de download
@@ -165,6 +171,8 @@ class App(ctk.CTk):
         self.tray_icon = None
         self.sub_window = None
         self.mutex = None # Variável para guardar o handle do mutex
+        self.extension_list_frame = None
+        self.keyword_list_frame = None
 
         self.create_widgets()
         self.load_config()
@@ -260,9 +268,20 @@ class App(ctk.CTk):
         folder_entry.pack(side="left", padx=5, pady=5, expand=True, fill="x")
         add_button = ctk.CTkButton(add_frame, text="Adicionar", width=80, command=lambda: add_command(key_entry.get(), folder_entry.get(), key_entry, folder_entry))
         add_button.pack(side="left", padx=5, pady=5)
+        
+        # Botão para restaurar padrões
+        if rule_type == "Extensão":
+            restore_button = ctk.CTkButton(add_frame, text="Restaurar Padrões", command=self.restore_default_extensions)
+            restore_button.pack(side="left", padx=(5, 10), pady=5)
 
         list_frame = ctk.CTkScrollableFrame(tab, label_text=f"Regras de {rule_type}")
         list_frame.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
+        
+        if rule_type == "Extensão":
+            self.extension_list_frame = list_frame
+        elif rule_type == "Palavra-Chave":
+            self.keyword_list_frame = list_frame
+            
         self.populate_rules_list(list_frame, data_dict, remove_command)
 
     def setup_history_tab(self):
@@ -328,6 +347,7 @@ class App(ctk.CTk):
         self.save_config()
         self.update_rules_tab_ui("Regras de Extensão")
         key_entry.delete(0, "end"); folder_entry.delete(0, "end")
+        self.prompt_for_rescan()
 
     def remove_extension_rule(self, ext):
         if ext in self.extension_map:
@@ -341,12 +361,49 @@ class App(ctk.CTk):
         self.save_config()
         self.update_rules_tab_ui("Regras de Palavra-Chave")
         key_entry.delete(0, "end"); folder_entry.delete(0, "end")
+        self.prompt_for_rescan()
 
     def remove_keyword_rule(self, keyword):
         if keyword in self.keyword_rules:
             del self.keyword_rules[keyword]
             self.save_config()
             self.update_rules_tab_ui("Regras de Palavra-Chave")
+            
+    def restore_default_extensions(self):
+        if messagebox.askyesno("Restaurar Regras Padrão?",
+                               "Tem a certeza de que deseja apagar todas as suas regras de extensão personalizadas e restaurar a lista padrão?",
+                               parent=self):
+            self.extension_map = DEFAULT_EXTENSION_MAP.copy()
+            self.save_config()
+            self.update_rules_tab_ui("Regras de Extensão")
+            self.log_message("Regras de extensão restauradas para o padrão.")
+
+    def prompt_for_rescan(self):
+        """Pergunta ao utilizador se deseja fazer uma nova verificação após adicionar uma regra."""
+        if self.is_monitoring:
+            if messagebox.askyesno("Aplicar Nova Regra?", 
+                                   "A monitorização está ativa. Deseja verificar novamente as pastas para aplicar esta nova regra aos ficheiros existentes?",
+                                   parent=self):
+                self.rescan_folders()
+
+    def rescan_folders(self):
+        """Inicia uma nova verificação de todas as pastas monitorizadas numa thread separada."""
+        if not self.is_monitoring:
+            return
+
+        self.log_message("Iniciando nova verificação para aplicar novas regras...")
+        
+        def rescan_task():
+            for directory in self.target_directories:
+                if not self.is_monitoring:
+                    self.log_message("Nova verificação cancelada.")
+                    break
+                self.organize_existing_files(directory)
+            
+            if self.is_monitoring:
+                self.log_message("Nova verificação concluída.")
+
+        threading.Thread(target=rescan_task, daemon=True).start()
 
     def add_to_history(self, source, destination, log_msg):
         self.move_history.append({"source": source, "destination": destination, "log_msg": log_msg})
@@ -394,10 +451,10 @@ class App(ctk.CTk):
             remove_button.grid(row=0, column=1, padx=10, pady=5, sticky="e")
 
     def update_rules_tab_ui(self, tab_name):
-        if tab_name == "Regras de Extensão":
-            self.populate_rules_list(self.tab_view.tab(tab_name).winfo_children()[1], self.extension_map, self.remove_extension_rule)
-        elif tab_name == "Regras de Palavra-Chave":
-            self.populate_rules_list(self.tab_view.tab(tab_name).winfo_children()[1], self.keyword_rules, self.remove_keyword_rule)
+        if tab_name == "Regras de Extensão" and self.extension_list_frame:
+            self.populate_rules_list(self.extension_list_frame, self.extension_map, self.remove_extension_rule)
+        elif tab_name == "Regras de Palavra-Chave" and self.keyword_list_frame:
+            self.populate_rules_list(self.keyword_list_frame, self.keyword_rules, self.remove_keyword_rule)
 
     def update_history_tab_ui(self):
         for widget in self.history_list_frame.winfo_children(): widget.destroy()
@@ -593,8 +650,6 @@ if __name__ == "__main__":
             if hwnd:
                 win32gui.ShowWindow(hwnd, 9)
                 win32gui.SetForegroundWindow(hwnd)
-            # CORREÇÃO: Usa os._exit(0) para uma saída imediata e limpa,
-            # evitando a criação de um ícone "fantasma" na bandeja.
             os._exit(0)
 
     start_minimized_arg = '--start-minimized' in sys.argv
