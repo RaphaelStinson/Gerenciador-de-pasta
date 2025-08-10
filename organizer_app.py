@@ -51,7 +51,12 @@ class FileOrganizerHandler(FileSystemEventHandler):
     def on_created(self, event):
         if not event.is_directory:
             # Adiciona uma verificação mais robusta para garantir que o ficheiro está completo
-            self.wait_for_file_to_be_ready(event.src_path)
+            threading.Thread(target=self.wait_for_file_to_be_ready, args=(event.src_path,), daemon=True).start()
+
+    def on_moved(self, event):
+        """Lida com ficheiros que são movidos para a pasta ou renomeados (fim do download)."""
+        if not event.is_directory:
+            threading.Thread(target=self.wait_for_file_to_be_ready, args=(event.dest_path,), daemon=True).start()
 
     def wait_for_file_to_be_ready(self, file_path):
         """Espera até que um ficheiro não esteja mais a ser modificado antes de o processar."""
@@ -67,14 +72,14 @@ class FileOrganizerHandler(FileSystemEventHandler):
             # Espera até que o tamanho do ficheiro se estabilize
             last_size = -1
             stable_count = 0
-            max_stable_count = 3  # Requer 3 segundos de estabilidade
+            max_stable_count = 2  # Requer 2 segundos de estabilidade
 
             while stable_count < max_stable_count:
                 if not os.path.exists(file_path):
                     return # O ficheiro foi removido durante a verificação
 
                 current_size = os.path.getsize(file_path)
-                if current_size == last_size and current_size != 0:
+                if current_size == last_size: # CORREÇÃO: Remove a verificação de != 0 para permitir ficheiros vazios
                     stable_count += 1
                 else:
                     stable_count = 0 # Reinicia a contagem se o tamanho mudar
@@ -215,7 +220,6 @@ class App(ctk.CTk):
     def setup_main_tab(self):
         tab = self.tab_view.tab("Principal")
         tab.grid_columnconfigure(0, weight=1)
-        # CORREÇÃO: Define o peso para as linhas corretas para garantir a expansão
         tab.grid_rowconfigure(1, weight=1) # Lista de pastas
         tab.grid_rowconfigure(4, weight=1) # Log
 

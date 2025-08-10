@@ -137,6 +137,26 @@
             "source": "C:/Users/rafae/Downloads\\lexico (1).txt",
             "destination": "C:/Users/rafae/Downloads\\Documentos\\2025\\08-Agosto\\lexico (1).txt",
             "log_msg": "'lexico (1).txt' movido para 'Documentos\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\neobrutal-zebar.zip",
+            "destination": "C:/Users/rafae/Downloads\\Compactados\\2025\\08-Agosto\\neobrutal-zebar.zip",
+            "log_msg": "'neobrutal-zebar.zip' movido para 'Compactados\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\XTUSetup_7.14.2.45.exe",
+            "destination": "C:/Users/rafae/Downloads\\Executáveis\\2025\\08-Agosto\\XTUSetup_7.14.2.45.exe",
+            "log_msg": "'XTUSetup_7.14.2.45.exe' movido para 'Executáveis\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\cpu-z_2.16-en.exe",
+            "destination": "C:/Users/rafae/Downloads\\Executáveis\\2025\\08-Agosto\\cpu-z_2.16-en.exe",
+            "log_msg": "'cpu-z_2.16-en.exe' movido para 'Executáveis\\2025\\08-Agosto'."
+        },
+        {
+            "source": "C:/Users/rafae/Downloads\\cpu-z_2.16-en.exe",
+            "destination": "C:/Users/rafae/Downloads\\Executáveis\\2025\\08-Agosto\\cpu-z_2.16-en.exe",
+            "log_msg": "'cpu-z_2.16-en.exe' movido para 'Executáveis\\2025\\08-Agosto'."
         }
     ]
 }
